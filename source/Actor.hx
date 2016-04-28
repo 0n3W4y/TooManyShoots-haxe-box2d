@@ -45,6 +45,7 @@ class Actor {
 		_costume.x = _body.getPosition().x * world_scale;
 		_costume.y = _body.getPosition().y * world_scale;
 		_costume.rotation = _body.getAngle() * 180/Math.PI;
+		trace("_costume.x=" + _costume.x + "; _body.getPosition().x=" + _body.getPosition().x);
 	}
 
 	private function childSpecificUpdate(){

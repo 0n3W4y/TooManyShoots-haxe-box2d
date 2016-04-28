@@ -44,11 +44,10 @@ import flash.geom.Point;
 		private function init()
 		{
 			createWorld();
-		//	add_debuger();
+			add_debuger();
 			add_walls();
 			createActor();
-			addEventListener(Event.ENTER_FRAME, update);
-			
+			addEventListener(Event.ENTER_FRAME, update);			
 		}
 
 		private function add_debuger()
@@ -82,7 +81,7 @@ import flash.geom.Point;
 
 		public function createActor()
 		{	
-			actor = new PlayerActor(this, new Point(10, 10), new Point(10, -5));
+			actor = new PlayerActor(this, world, new Point(100, 100), new Point(8, -1));
 		}
 
 		public function add_walls()
