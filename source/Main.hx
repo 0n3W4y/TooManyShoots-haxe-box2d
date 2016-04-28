@@ -22,10 +22,13 @@ import flash.geom.Point;
 
 	class Main extends Sprite
 	{	
-		public static var world:B2World;
-		public static var world_scale:Float;
-
 		public var actor:PlayerActor;
+		private var world_scale:Float;
+		private	var world:B2World;
+		private var world_step:Float = 1/30;
+		private var velocityIterations:Int = 10;
+		private var positionIterations:Int = 10;
+		private var _pegActors:Array<Dynamic> = new Array();
 
 		public static function main () {
 		
@@ -44,9 +47,10 @@ import flash.geom.Point;
 		private function init()
 		{
 			createWorld();
-			add_debuger();
+		//	add_debuger();
 			add_walls();
 			createActor();
+			addSomePegs();
 			addEventListener(Event.ENTER_FRAME, update);			
 		}
 
@@ -67,25 +71,44 @@ import flash.geom.Point;
 		private function createWorld()
 		{
 			var gravity = new B2Vec2(0, 9.8);
-			world = new B2World(gravity, true);
-			world_scale = 30;
+			Global.world = new B2World(gravity, true);
+			Global.world_scale = 30;
+			Global.world_sprite = this;
+
+			world = Global.world;
+			world_scale = Global.world_scale;
 		}
 
 		private function update(event:Event)
 		{
-			world.step(1/30, 10, 10);
+
+			world.step(world_step, velocityIterations, positionIterations);
 			world.clearForces();
 			world.drawDebugData();
-			actor.updateNow();			
+			actor.updateNow();	
+			for (i in 0..._pegActors.length){
+				_pegActors[i].updateNow();
+			}
+			
 		}
 
-		public function createActor()
-		{	
-			actor = new PlayerActor(this, world, new Point(100, 100), new Point(8, -1));
+		public function createActor(){
+
+			actor = new PlayerActor(new Point(50, 50), new Point(8, -1));
+		}
+
+		public function addSomePegs(){
+			
+			var peg1:PegActor = new PegActor(new Point(200, 80), PegActor.NORMAL);
+			_pegActors.push(peg1);
+			var peg2:PegActor = new PegActor(new Point(250, 100), PegActor.GOAL);
+			_pegActors.push(peg2);
+			var peg3:PegActor = new PegActor(new Point(150, 90), PegActor.NORMAL);
+			_pegActors.push(peg3);
 		}
 
 		public function add_walls()
-		{
+		{	
 			
 			var wallLeftSprite = new Sprite();
 			wallLeftSprite.graphics.beginFill(0x000015, 0.5);

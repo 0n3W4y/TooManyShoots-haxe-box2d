@@ -1,7 +1,6 @@
 package;
 
 import flash.geom.Point;
-import flash.display.DisplayObjectContainer;
 import box2D.collision.shapes.B2CircleShape;
 import box2D.common.math.B2Vec2;
 import box2D.dynamics.B2World;
@@ -14,22 +13,25 @@ import flash.display.Sprite;
 
 class PlayerActor extends Actor{
 
-	private static var PLAYER_DIAMETR:Int = 15;
-	private var world_scale:Float = 30;
+	private static var PLAYER_DIAMETER:Int = 15;
+
 	
-	public function new(parent:DisplayObjectContainer, world:B2World, location:Point, initVel:Point){
-		
+	public function new(location:Point, initVel:Point){
+		var world = Global.world;
+		var world_scale = Global.world_scale;
+		var world_sprite = Global.world_sprite;
+
 		var playerSprite = new Sprite();
 		playerSprite.graphics.beginFill(0x07aa15, 1);
-		playerSprite.graphics.drawCircle(0, 0, PLAYER_DIAMETR);
+		playerSprite.graphics.drawCircle(0, 0, PLAYER_DIAMETER);
 		playerSprite.graphics.endFill();
-		playerSprite.scaleX = PLAYER_DIAMETR / playerSprite.width;
-		playerSprite.scaleY = PLAYER_DIAMETR / playerSprite.height;
-		parent.addChild(playerSprite);
+		playerSprite.scaleX = PLAYER_DIAMETER / playerSprite.width;
+		playerSprite.scaleY = PLAYER_DIAMETER / playerSprite.height;
+		world_sprite.addChild(playerSprite);
 		
-		var circle = new B2CircleShape (PLAYER_DIAMETR/ world_scale);
+		var circle = new B2CircleShape (PLAYER_DIAMETER/2/ world_scale);
 		var bodyDefinition = new B2BodyDef();
-		bodyDefinition.position.set (100/world_scale, 50/world_scale);
+		bodyDefinition.position.set (location.x/world_scale, location.y/world_scale);
 		bodyDefinition.type = B2Body.b2_dynamicBody;	
 		var body = world.createBody(bodyDefinition);
 		var fixtureDefinition = new B2FixtureDef ();
@@ -41,8 +43,8 @@ class PlayerActor extends Actor{
 		body.createFixture (fixtureDefinition);
 		
 
-		//var velocityVector = new B2Vec2(initVel.x / world_scale, initVel.y / world_scale);
-		//body.setLinearVelocity(velocityVector);
+		var velocityVector = new B2Vec2(initVel.x / world_scale, initVel.y / world_scale);
+		body.setLinearVelocity(velocityVector);
 		
 		
 		super(body, playerSprite);
