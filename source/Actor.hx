@@ -21,22 +21,10 @@ class Actor extends EventDispatcher{
 	private var world_scale:Float = Main.world_scale;
 	private var world:B2World = Main.world;
 	
-	public function Actor(costume:Sprite){
+	public function Actor(body:B2Body, costume:Sprite){
 
 		_costume = costume;
-
-		var circle = new B2CircleShape (15 / world_scale);
-		var bodyDefinition = new B2BodyDef();
-		bodyDefinition.position.set (320/world_scale, 180/world_scale);
-		bodyDefinition.type = B2Body.b2_dynamicBody;	
-		_body = world.createBody(bodyDefinition);
-		var fixtureDefinition = new B2FixtureDef ();
-		fixtureDefinition.shape = circle;
-		fixtureDefinition.friction = 0.8;
-		fixtureDefinition.restitution = 0.3;
-		fixtureDefinition.density = 0.3;
-			
-		_body.createFixture (fixtureDefinition);
+		_body = body;
 
 		updateMyLook();
 	}
