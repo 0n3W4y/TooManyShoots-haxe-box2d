@@ -18,11 +18,15 @@ class Actor {
 	
 	private var _body:B2Body;
 	private var _costume:Sprite;
-	public static var world_scale:Float = Main.world_scale;
-	public static var world:B2World = Main.world;
+	public var world_scale:Float;
+	public var world:B2World;
+	public var world_sprite:Sprite;
 	
 	public function new(body:B2Body, costume:Sprite){
 
+		world_scale = Global.world_scale;
+		world = Global.world;
+		world_sprite = Global.world_sprite;
 		_costume = costume;
 		_body = body;
 
@@ -45,7 +49,6 @@ class Actor {
 		_costume.x = _body.getPosition().x * world_scale;
 		_costume.y = _body.getPosition().y * world_scale;
 		_costume.rotation = _body.getAngle() * 180/Math.PI;
-		trace("_costume.x=" + _costume.x + "; _body.getPosition().x=" + _body.getPosition().x);
 	}
 
 	private function childSpecificUpdate(){
