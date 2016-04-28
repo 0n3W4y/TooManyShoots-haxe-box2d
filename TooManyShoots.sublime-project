@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+		{
+			"name": "TooManyShoots",
+			"path": "c:\\Users\\Admin\\Desktop\\teaching\\TooManyShoots"
+		},
+		{
+			"name": "box2d",
+			"path": "c:\\haxetoolkit\\haxe\\lib\\box2d\\1,2,3"
+		},
+		{
+			"name": "Haxe",
+			"path": "C:\\HaxeToolkit\\haxe\\std"
+		}
+	]
+}

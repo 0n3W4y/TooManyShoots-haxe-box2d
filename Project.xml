@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+	
+	<meta title="TooManyShoots" version="0.0.1" company="InTrustYourSelf" />
+	<app main="Main" path="Export" file="TooManyShoots" />
+	
+	<window width="640" height="360" unless="mobile" />
+	
+	<source path="source" />
+	
+	<haxelib name="openfl" />
+	<haxelib name="box2d" />
+	
+	<assets path="assets" rename="assets" />
+	<set name="BUILD_DIR" value="export" />
+
+
+	<haxelib name="box2d" />
+</project>
