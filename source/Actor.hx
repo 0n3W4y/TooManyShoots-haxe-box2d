@@ -14,14 +14,14 @@ import flash.events.EventDispatcher;
 import flash.display.DisplayObject;
 
 
-class Actor extends EventDispatcher{
+class Actor {
 	
 	private var _body:B2Body;
 	private var _costume:Sprite;
 	private var world_scale:Float = Main.world_scale;
 	private var world:B2World = Main.world;
 	
-	public function Actor(body:B2Body, costume:Sprite){
+	public function new(body:B2Body, costume:Sprite){
 
 		_costume = costume;
 		_body = body;
