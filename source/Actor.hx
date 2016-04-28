@@ -18,8 +18,8 @@ class Actor {
 	
 	private var _body:B2Body;
 	private var _costume:Sprite;
-	private var world_scale:Float = Main.world_scale;
-	private var world:B2World = Main.world;
+	public static var world_scale:Float = Main.world_scale;
+	public static var world:B2World = Main.world;
 	
 	public function new(body:B2Body, costume:Sprite){
 
@@ -30,9 +30,9 @@ class Actor {
 	}
 
 	public function updateNow(){
-	//	if (_body.getType() != STATIC_BODY){
+		if (_body.getType() != STATIC_BODY){
 			updateMyLook();
-	//	}
+		}
 		childSpecificUpdate();
 
 	}
@@ -44,7 +44,7 @@ class Actor {
 	private function updateMyLook(){
 		_costume.x = _body.getPosition().x * world_scale;
 		_costume.y = _body.getPosition().y * world_scale;
-		//_costume.rotation = _body.getAngle() * 180/Math.PI;
+		_costume.rotation = _body.getAngle() * 180/Math.PI;
 	}
 
 	private function childSpecificUpdate(){

@@ -18,16 +18,14 @@ import flash.Lib;
 import flash.utils.Timer;
 import flash.events.TimerEvent;
 import flash.display.Stage;
+import flash.geom.Point;
 
 	class Main extends Sprite
 	{	
 		public static var world:B2World;
 		public static var world_scale:Float;
 
-		private var ballSprite:Sprite;
-		private var ballBody:B2Body;
-
-		public var actor:Actor;
+		public var actor:PlayerActor;
 
 		public static function main () {
 		
@@ -46,7 +44,7 @@ import flash.display.Stage;
 		private function init()
 		{
 			createWorld();
-			add_debuger();
+		//	add_debuger();
 			add_walls();
 			createActor();
 			addEventListener(Event.ENTER_FRAME, update);
@@ -84,28 +82,7 @@ import flash.display.Stage;
 
 		public function createActor()
 		{	
-				
-			var costume = new Sprite();
-			costume .graphics.beginFill(0x07aa15, 1);
-			costume .graphics.drawCircle(0, 0, 15);
-			costume .graphics.endFill();
-			addChild(costume);
-
-			var circle = new B2CircleShape (15 / world_scale);
-			var bodyDefinition = new B2BodyDef();
-			bodyDefinition.position.set (320/world_scale, 180/world_scale);
-			bodyDefinition.type = B2Body.b2_dynamicBody;	
-			var _body = world.createBody(bodyDefinition);
-			var fixtureDefinition = new B2FixtureDef ();
-			fixtureDefinition.shape = circle;
-			fixtureDefinition.friction = 0.8;
-			fixtureDefinition.restitution = 0.3;
-			fixtureDefinition.density = 0.3;
-			
-			_body.createFixture (fixtureDefinition);
-
-			actor = new Actor(_body, costume);
-
+			actor = new PlayerActor(this, new Point(10, 10), new Point(10, -5));
 		}
 
 		public function add_walls()
