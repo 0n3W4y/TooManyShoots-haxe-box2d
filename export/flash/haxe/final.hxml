@@ -6,7 +6,7 @@
 -cp C:/HaxeToolkit/haxe/lib/box2d/1,2,3
 -D box2d=1.2.3
 -cp source
--cp C:\HaxeToolkit\haxe\lib/openfl/3,6,1/extern
+-cp C:\HaxeToolkit\haxe\lib\openfl/3,6,1/extern
 -D native-trace
 -D openfl-next
 -D tools=2.9.1
@@ -17,6 +17,6 @@
 -swf-lib export/flash/obj/assets.swf
 -swf-version 11.2
 -swf export/flash/bin/TooManyShoots.swf
--swf-header 640:360:30:FFFFFF
+-swf-header 1366:768:30:FFFFFF
 -cp export/flash/haxe
 -D final

@@ -95,7 +95,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "499",
+			build: "506",
 			company: "InTrustYourSelf",
 			file: "TooManyShoots",
 			fps: 30,
@@ -113,13 +113,13 @@ class ApplicationMain {
 					display: 0,
 					fullscreen: false,
 					hardware: true,
-					height: 360,
+					height: 768,
 					parameters: "{}",
 					resizable: true,
 					stencilBuffer: true,
 					title: "TooManyShoots",
 					vsync: false,
-					width: 640,
+					width: 1366,
 					x: null,
 					y: null
 				},
@@ -137,7 +137,7 @@ class ApplicationMain {
 		
 		#if (js && html5)
 		#if (munit || utest)
-		openfl.Lib.embed (null, 640, 360, "FFFFFF");
+		openfl.Lib.embed (null, 1366, 768, "FFFFFF");
 		#end
 		#else
 		create ();
