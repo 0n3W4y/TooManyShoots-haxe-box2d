@@ -6,7 +6,7 @@
 -cp C:/HaxeToolkit/haxe/lib/box2d/1,2,3
 -D box2d=1.2.3
 -cp source
--cp C:\HaxeToolkit\haxe\lib\openfl/3,6,1/extern
+-cp C:\HaxeToolkit\haxe\lib/openfl/3,6,1/extern
 -D native-trace
 -D openfl-next
 -D tools=2.9.1

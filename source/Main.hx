@@ -45,6 +45,7 @@ import flash.geom.Point;
 
 		private function init()
 		{
+
 			createWorld();
 			add_debuger();
 			createLevel();
@@ -77,13 +78,30 @@ import flash.geom.Point;
 		}
 
 		public function createLevel(){
-
-			var horizSpacing:Int = 36;
-			var vetrSpacing:Int = 36;
-			var pegBounds:B2PolygonShape = new B2PolygonShape();
 			add_walls();
 			createActor();
-			addSomePegs();
+			createPegs();
+		}
+
+		public function createPegs(){
+			var horizSpacing:Int = 36;
+			var vetrSpacing:Int = 36;
+			var pegBoundsX:Int = 100;
+			var pegBoundsY:Int = 250;
+			var pegBoundsWidth:Int = 450;
+			var pegBoundsHeight:Int = 250;
+			var pegY = pegBoundsY;
+			var flipWor:Bool = false;
+			while(pegY < (pegBoundsY+pegBoundsHeight)){
+				pegY += vetrSpacing;
+				var pegX = (flipWor) ? pegBoundsX : pegBoundsX + horizSpacing/2;
+				flipWor = !flipWor;
+				while(pegX < (pegBoundsX+pegBoundsWidth)){
+					var newPeg:PegActor = new PegActor(new Point(pegX, pegY), PegActor.NORMAL);
+					_allActors.push(newPeg);
+					pegX +=horizSpacing;
+				}
+			}
 		}
 
 		private function update(event:Event)
@@ -102,28 +120,29 @@ import flash.geom.Point;
 
 			var actor:PlayerActor = new PlayerActor(new Point(200, 20), new Point(8, -1));
 			_allActors.push(actor);
-			trace ('stage.widt = ' + stage.stageWidth);
 		}
 
-		public function addSomePegs(){
-			
-			var peg1:PegActor = new PegActor(new Point(200, 100), PegActor.NORMAL);
-			_allActors.push(peg1);
-			var peg2:PegActor = new PegActor(new Point(250, 100), PegActor.GOAL);
-			_allActors.push(peg2);
-			var peg3:PegActor = new PegActor(new Point(150, 100), PegActor.NORMAL);
-			_allActors.push(peg3);
-		}
 
 		public function add_walls()
 		{	
-			
+			var leftWallArray:Array<Dynamic> = new Array();
+			var ver1 = new B2Vec2(-5/world_scale, -768/2/world_scale);
+			leftWallArray.push(ver1);
+			var ver2 = new B2Vec2(5/world_scale, -768/2/world_scale);
+			leftWallArray.push(ver2);
+			var ver3 = new B2Vec2(5/world_scale, 768/2/world_scale);
+			leftWallArray.push(ver3);
+			var ver4 = new B2Vec2(-5/world_scale, 768/2/world_scale);
+			leftWallArray.push(ver4);
+
+			var leftWall:ArbiStaticActor = new ArbiStaticActor(new Point(5, 768/2), leftWallArray);
+			/*
 			var wallLeftSprite = new Sprite();
 			wallLeftSprite.graphics.beginFill(0x000015, 0.5);
 			wallLeftSprite.graphics.drawRect(0, 0, 10, 768);
 			wallLeftSprite.graphics.endFill();
 			addChild(wallLeftSprite);
-			
+			*/
 			var wallRightSprite = new Sprite();
 			wallRightSprite.graphics.beginFill(0x000015, 0.5);
 			wallRightSprite.graphics.drawRect(0, 0, 10, 768);
@@ -163,7 +182,7 @@ import flash.geom.Point;
 
 			wallTopSprite.x = (wallBody.getPosition().x - 1366/2/world_scale) * world_scale;
 			wallTopSprite.y = (wallBody.getPosition().y - 10/2/world_scale) * world_scale;
-
+			/*
 			bodyDefinition.position.set (10/2/world_scale, 768/2/world_scale);
 			polygon.setAsBox (10/2/world_scale, 768/2/world_scale);
 			wallBody = world.createBody (bodyDefinition);
@@ -172,7 +191,7 @@ import flash.geom.Point;
 
 			wallLeftSprite.x = (wallBody.getPosition().x - 10/2/world_scale) * world_scale;
 			wallLeftSprite.y = (wallBody.getPosition().y - 768/2/world_scale) * world_scale;
-
+			*/
 			bodyDefinition.position.set ((1366-10/2)/world_scale, 768/2/world_scale);
 			wallBody = world.createBody (bodyDefinition);
 			fixtureDefinition.shape = polygon;

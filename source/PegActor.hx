@@ -25,14 +25,12 @@ class PegActor extends Actor {
 	public function new(location:flash.geom.Point, type:Int){
 		_beenHit = false;
 		_pegType = type;
-		trace(_pegType + " - _pegType; and type: " + type);
 		var world = Global.world;
 		var world_scale = Global.world_scale;
 		var world_sprite = Global.world_sprite;
 
 		pegSprite = new Sprite();
-		setColor();
-		//pegSprite.graphics.beginFill(0x000000, 1); 
+		pegSprite.graphics.beginFill(0x000000, 1); 
 		pegSprite.graphics.drawCircle(0, 0, PEG_DIAMETER);
 		pegSprite.graphics.endFill();
 		pegSprite.scaleX = PEG_DIAMETER / pegSprite.width;
@@ -50,31 +48,37 @@ class PegActor extends Actor {
 		fixtureDefinition.density = 0;
 			
 		body.createFixture (fixtureDefinition);
-		
+		setColor();
 		super(body, pegSprite);
 
 		
 	}
 
+
 	private function setColor(){
 		if (_pegType == 1){
 			if(_beenHit){
+				pegSprite.graphics.clear();
 				pegSprite.graphics.beginFill(0x00aa00, 1); //blue
-
+				pegSprite.graphics.endFill();
 			}
 			else{
+				pegSprite.graphics.clear();
 				pegSprite.graphics.beginFill(0x0000aa, 1);  //green
-
+				pegSprite.graphics.endFill();
 			}
 		}
 		else if (_pegType == 2){
 			if (_beenHit){
+				pegSprite.graphics.clear();
 				pegSprite.graphics.beginFill(0xaa0000, 1); //red
+				pegSprite.graphics.endFill();
 
 			}
 			else{
+				pegSprite.graphics.clear();
 				pegSprite.graphics.beginFill(0xaa00aa, 1); //yellow
-
+				pegSprite.graphics.endFill();
 			}
 		}
 		else{
