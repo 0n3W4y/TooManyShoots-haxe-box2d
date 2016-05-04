@@ -4,7 +4,7 @@
 	<meta title="TooManyShoots" version="0.0.1" company="InTrustYourSelf" />
 	<app main="Main" path="Export" file="TooManyShoots" />
 	
-	<window width="1366" height="768" unless="mobile" />
+	<window width="720" height="480" unless="mobile" />
 	
 	<source path="source" />
 	

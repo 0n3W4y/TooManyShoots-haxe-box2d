@@ -86,8 +86,8 @@ import flash.geom.Point;
 		public function createPegs(){
 			var horizSpacing:Int = 36;
 			var vetrSpacing:Int = 36;
-			var pegBoundsX:Int = 100;
-			var pegBoundsY:Int = 250;
+			var pegBoundsX:Int = 120;
+			var pegBoundsY:Int = 100;
 			var pegBoundsWidth:Int = 450;
 			var pegBoundsHeight:Int = 250;
 			var pegY = pegBoundsY;
@@ -118,45 +118,47 @@ import flash.geom.Point;
 
 		public function createActor(){
 
-			var actor:PlayerActor = new PlayerActor(new Point(200, 20), new Point(0, 1000));
+			var actor:PlayerActor = new PlayerActor(new Point(200, 20), new B2Vec2(0, 0));
 			_allActors.push(actor);
 		}
 
 
 		public function add_walls()
 		{	
+			var lrCoord = new Array();
+			lrCoord.push(new B2Vec2(-10/2/world_scale,  -480/2/world_scale));
+  			lrCoord.push(new B2Vec2(10/2/world_scale,  -480/2/world_scale));
+  			lrCoord.push(new B2Vec2(10/2/world_scale, 480/2/world_scale));
+  			lrCoord.push(new B2Vec2(-10/2/world_scale,  480/2/world_scale));
+
+			var tbSize = [720, 10];
+
+			var leftPoint = new B2Vec2(5/world_scale, 480/2/world_scale);
+			var rightPoint = new B2Vec2(715/world_scale, 480/2/world_scale);
+			//var topPoint = [720, 10];
+			//var botPoint = [720, 475*2];
+
+			var leftWall:ArbiStaticActor = new ArbiStaticActor(lrCoord, leftPoint);
+			var rightWall:ArbiStaticActor = new ArbiStaticActor(lrCoord, rightPoint);
+			//var topWall:ArbiStaticActor = new ArbiStaticActor(tbSize, topPoint);
+			//var botWall:ArbiStaticActor = new ArbiStaticActor(tbSize, botPoint);
 			
-			//var leftWall:ArbiStaticActor = new ArbiStaticActor();
-
-			//var topWall:ArbiStaticActor = new ArbiStaticActor();
-
-			var lrSize = [10, 768];
-			var tbSize = [1366, 10];
-
-			var leftPoint = [100, 100];
-			var rightPoint = [1366, 758];
-			var topPoint = [1368, 10];
-			var botPoint = [1358, 768];
-
-			var leftWall:ArbiStaticActor = new ArbiStaticActor(lrSize, leftPoint);
-			/*
-			bodyDefinition.position.set (10/2/world_scale, 768/2/world_scale);
-			polygon.setAsBox (10/2/world_scale, 768/2/world_scale);
-			wallBody = world.createBody (bodyDefinition);
-			fixtureDefinition.shape = polygon;
-			wallBody.createFixture(fixtureDefinition);
-
-			wallLeftSprite.x = (wallBody.getPosition().x - 10/2/world_scale) * world_scale;
-			wallLeftSprite.y = (wallBody.getPosition().y - 768/2/world_scale) * world_scale;
-			
-			bodyDefinition.position.set ((1366-10/2)/world_scale, 768/2/world_scale);
-			wallBody = world.createBody (bodyDefinition);
-			fixtureDefinition.shape = polygon;
-			wallBody.createFixture(fixtureDefinition);
-
-			wallRightSprite.x = (wallBody.getPosition().x - 10/2/world_scale) * world_scale;
-			wallRightSprite.y = (wallBody.getPosition().y - 768/2/world_scale) * world_scale;
-			*/
-
+			//set each vertex of polygon in an array
+  			var vertices = new Array();
+  			vertices.push(new B2Vec2(-10/world_scale,  20/world_scale));
+  			vertices.push(new B2Vec2(-10/world_scale,  0));
+  			vertices.push(new B2Vec2( 0, -30/world_scale));
+  			vertices.push(new B2Vec2(10/world_scale,  0));
+  			vertices.push(new B2Vec2( 10/world_scale,  10/world_scale));
+  
+  			var polygonShape = new B2PolygonShape();
+  			polygonShape.setAsArray(vertices, 5); //pass array to the shape
+  			var myFixtureDef = new B2FixtureDef();
+  			myFixtureDef.shape = polygonShape; //change the shape of the fixture
+  			var myBodyDef = new B2BodyDef();
+  			myBodyDef.position.set(10, 1); //in the middle
+  			myBodyDef.type = B2Body.b2_dynamicBody;
+  			var body = world.createBody (myBodyDef);
+  			body.createFixture(myFixtureDef);
 		}
 	}

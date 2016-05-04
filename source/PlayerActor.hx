@@ -16,7 +16,7 @@ class PlayerActor extends Actor{
 	private static var PLAYER_DIAMETER:Int = 15;
 
 	
-	public function new(location:Point, initVel:Point){
+	public function new(location:Point, initVel:B2Vec2){
 		var world = Global.world;
 		var world_scale = Global.world_scale;
 		var world_sprite = Global.world_sprite;
@@ -42,9 +42,7 @@ class PlayerActor extends Actor{
 			
 		body.createFixture (fixtureDefinition);
 		
-
-		var velocityVector = new B2Vec2(initVel.x / world_scale, initVel.y / world_scale);
-		body.setLinearVelocity(velocityVector);
+		body.setLinearVelocity(initVel);
 		
 		
 		super(body, playerSprite);

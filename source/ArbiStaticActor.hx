@@ -6,56 +6,77 @@ import box2D.dynamics.B2Body;
 import box2D.collision.shapes.B2PolygonShape;
 import box2D.dynamics.B2BodyDef;
 import box2D.dynamics.B2FixtureDef;
+import box2D.common.math.B2Vec2;
 import flash.display.Sprite;
 
 
 class ArbiStaticActor extends Actor{
 
-	public function new(size:Array<Dynamic>, location:Array<Dynamic>){
+
+
+	public function new(coord:Array<B2Vec2>, location:B2Vec2){
 	    
-		var myBody:B2Body = createBody(size, location);
-		var mySprite:Sprite = createSprite(size, location);
+		var myBody:B2Body = createBody(coord, location);
+		var mySprite:Sprite = createSprite(coord, location);
 		
 		super(myBody, mySprite);
 	}
 
-	private function createBody(size:Array<Dynamic>, location:Array<Dynamic>){
+	private function createBody(coord:Array<B2Vec2>, location:B2Vec2){
 
 		var world = Global.world;
 		var world_scale = Global.world_scale;
 		var world_sprite = Global.world_sprite;
+		
 
 		var polygon = new B2PolygonShape ();
 		var bodyDef = new B2BodyDef();
 		var fixtureDef = new B2FixtureDef ();
-		fixtureDef.density = 0;
-		fixtureDef.friction = 0;
-		fixtureDef.restitution = 0;
+		//fixtureDef.density = 0;
+		//fixtureDef.friction = 0;
+		//fixtureDef.restitution = 0;
 		var body:B2Body;
 
-		bodyDef.position.set (location[0]/2/world_scale, (location[1]/2)/world_scale);
-		polygon.setAsBox (size[0]/2/world_scale, size[1]/2/world_scale);
+		bodyDef.position.set (location.x, location.y);
+		polygon.setAsArray(coord, coord.length);
 		body = world.createBody (bodyDef);
 		fixtureDef.shape = polygon;
 		body.createFixture(fixtureDef);
+		
+
 
 
 		return body;
 	}
 
-	private function createSprite(size:Array<Dynamic>, location:Array<Dynamic>){
+	private function createSprite(coord:Array<B2Vec2>, location:B2Vec2){
 
 		var world = Global.world;
 		var world_scale = Global.world_scale;
 		var world_sprite = Global.world_sprite;
 		
 		var sprite = new Sprite();
-		sprite.graphics.beginFill(0xff0000, 0.5);
-		sprite.graphics.drawRect(location[0], location[1], size[0], size[1]);
+		sprite.graphics.beginFill(0xff0000, 1);
+		sprite.graphics.lineStyle(2, 0x0000ff);
+		var firstPoint = coord[0];
+		sprite.graphics.moveTo(firstPoint.x*world_scale, firstPoint.y*world_scale);
+		trace (coord.length);
+		for(i in 1...coord.length){
+			var nextPoint = coord[i];
+			sprite.graphics.lineTo(nextPoint.x*world_scale, nextPoint.y*world_scale);
+		}
+
+		sprite.graphics.lineTo(firstPoint.x*world_scale, firstPoint.y*world_scale);
 		sprite.graphics.endFill();
 		world_sprite.addChild(sprite);
 
 		return sprite;
 
 	}
+
+	//override public function updateMyLook(){
+	//	_costume.x = (_body.getPosition().x - sizeX/2/world_scale) * world_scale;
+	//	_costume.y = (_body.getPosition().y - sizeY/2/world_scale) * world_scale;
+	//	_costume.rotation = _body.getAngle() * 180/Math.PI;
+	//}
 }
