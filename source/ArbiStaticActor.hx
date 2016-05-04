@@ -11,57 +11,51 @@ import flash.display.Sprite;
 
 class ArbiStaticActor extends Actor{
 
-	public function new(location:Point, arrayOfCoordinates:Array<Dynamic>){
+	public function new(size:Array<Dynamic>, location:Array<Dynamic>){
 	    
-		var myBody:B2Body = createBodyFromCoordinates(arrayOfCoordinates, location);
-		var mySprite:Sprite = createSpriteFromCoordinates(arrayOfCoordinates, location);
+		var myBody:B2Body = createBody(size, location);
+		var mySprite:Sprite = createSprite(size, location);
 		
 		super(myBody, mySprite);
 	}
 
-	private function createBodyFromCoordinates(arrayOfCoordinates:Array<Dynamic>, location:Point){
+	private function createBody(size:Array<Dynamic>, location:Array<Dynamic>){
 
 		var world = Global.world;
 		var world_scale = Global.world_scale;
 		var world_sprite = Global.world_sprite;
 
-		var newShapeDef:B2PolygonShape = new B2PolygonShape();
-		newShapeDef.setAsArray(arrayOfCoordinates, arrayOfCoordinates.length);
-		var fixtureDefinition = new B2FixtureDef();
-		fixtureDefinition.shape = newShapeDef;
-		fixtureDefinition.density = 0;
-		fixtureDefinition.friction = 0.2;
-		fixtureDefinition.restitution = 0.3;
-		var bodyDefinition = new B2BodyDef();
-		bodyDefinition.position.set (location.x/world_scale, location.y/world_scale);
-		var body = world.createBody(bodyDefinition);
-		body.createFixture (fixtureDefinition);
+		var polygon = new B2PolygonShape ();
+		var bodyDef = new B2BodyDef();
+		var fixtureDef = new B2FixtureDef ();
+		fixtureDef.density = 0;
+		fixtureDef.friction = 0;
+		fixtureDef.restitution = 0;
+		var body:B2Body;
+
+		bodyDef.position.set (location[0]/2/world_scale, (location[1]/2)/world_scale);
+		polygon.setAsBox (size[0]/2/world_scale, size[1]/2/world_scale);
+		body = world.createBody (bodyDef);
+		fixtureDef.shape = polygon;
+		body.createFixture(fixtureDef);
+
+
 		return body;
 	}
 
-	private function createSpriteFromCoordinates(arrayOfCoordinates:Array<Dynamic>, location:Point){
-		
+	private function createSprite(size:Array<Dynamic>, location:Array<Dynamic>){
+
 		var world = Global.world;
 		var world_scale = Global.world_scale;
 		var world_sprite = Global.world_sprite;
+		
+		var sprite = new Sprite();
+		sprite.graphics.beginFill(0xff0000, 0.5);
+		sprite.graphics.drawRect(location[0], location[1], size[0], size[1]);
+		sprite.graphics.endFill();
+		world_sprite.addChild(sprite);
 
-		var newSprite = new Sprite();
-		newSprite.graphics.lineStyle(2, 0x0000bb);
-		var firstPoint = arrayOfCoordinates[0];
-		newSprite.graphics.moveTo(firstPoint.x*world_scale, firstPoint.y*world_scale);
-		newSprite.graphics.beginFill(0x0000bb, 1);
-		for (i in 1...arrayOfCoordinates.length){
-			var newPoint = arrayOfCoordinates[i];
-			newSprite.graphics.lineTo(newPoint.x*world_scale, newPoint.y*world_scale);
-		}
-		newSprite.graphics.lineTo(firstPoint.x*world_scale, firstPoint.y*world_scale);
-		newSprite.graphics.endFill();
-
-		newSprite.x = location.x;
-		newSprite.y = location.y;
-		world_sprite.addChild(newSprite);
-
-		return newSprite;
+		return sprite;
 
 	}
 }

@@ -118,70 +118,27 @@ import flash.geom.Point;
 
 		public function createActor(){
 
-			var actor:PlayerActor = new PlayerActor(new Point(200, 20), new Point(8, -1));
+			var actor:PlayerActor = new PlayerActor(new Point(200, 20), new Point(0, 1000));
 			_allActors.push(actor);
 		}
 
 
 		public function add_walls()
 		{	
-			var leftWallArray:Array<Dynamic> = new Array();
-			var ver1 = new B2Vec2(-5/world_scale, -768/2/world_scale);
-			leftWallArray.push(ver1);
-			var ver2 = new B2Vec2(5/world_scale, -768/2/world_scale);
-			leftWallArray.push(ver2);
-			var ver3 = new B2Vec2(5/world_scale, 768/2/world_scale);
-			leftWallArray.push(ver3);
-			var ver4 = new B2Vec2(-5/world_scale, 768/2/world_scale);
-			leftWallArray.push(ver4);
-
-			var leftWall:ArbiStaticActor = new ArbiStaticActor(new Point(5, 768/2), leftWallArray);
-			/*
-			var wallLeftSprite = new Sprite();
-			wallLeftSprite.graphics.beginFill(0x000015, 0.5);
-			wallLeftSprite.graphics.drawRect(0, 0, 10, 768);
-			wallLeftSprite.graphics.endFill();
-			addChild(wallLeftSprite);
-			*/
-			var wallRightSprite = new Sprite();
-			wallRightSprite.graphics.beginFill(0x000015, 0.5);
-			wallRightSprite.graphics.drawRect(0, 0, 10, 768);
-			wallRightSprite.graphics.endFill();
-			addChild(wallRightSprite);
 			
-			var wallTopSprite = new Sprite();
-			wallTopSprite.graphics.beginFill(0x000015, 0.5);
-			wallTopSprite.graphics.drawRect(0, 0, 1366, 10);
-			wallTopSprite.graphics.endFill();
-			addChild(wallTopSprite);
-			
-			var wallBotSprite = new Sprite();
-			wallBotSprite.graphics.beginFill(0x000015, 0.5);
-			wallBotSprite.graphics.drawRect(0, 0, 1366, 10);
-			wallBotSprite.graphics.endFill();
-			addChild(wallBotSprite);
-			
-			var polygon = new B2PolygonShape ();
-			var bodyDefinition = new B2BodyDef();
-			var fixtureDefinition = new B2FixtureDef ();
-			var wallBody:B2Body;
+			//var leftWall:ArbiStaticActor = new ArbiStaticActor();
 
-			bodyDefinition.position.set (1366/2/world_scale, (768-10/2)/world_scale);
-			polygon.setAsBox (1366/2/world_scale, 10/2/world_scale);
-			wallBody = world.createBody (bodyDefinition);
-			fixtureDefinition.shape = polygon;
-			wallBody.createFixture(fixtureDefinition);
-			
-			wallBotSprite.x = (wallBody.getPosition().x - 1366/2/world_scale) * world_scale;
-			wallBotSprite.y = (wallBody.getPosition().y - 10/2/world_scale) * world_scale;
+			//var topWall:ArbiStaticActor = new ArbiStaticActor();
 
-			bodyDefinition.position.set (1366/2/world_scale, 10/2/world_scale);
-			wallBody = world.createBody (bodyDefinition);
-			fixtureDefinition.shape = polygon;
-			wallBody.createFixture(fixtureDefinition);
+			var lrSize = [10, 768];
+			var tbSize = [1366, 10];
 
-			wallTopSprite.x = (wallBody.getPosition().x - 1366/2/world_scale) * world_scale;
-			wallTopSprite.y = (wallBody.getPosition().y - 10/2/world_scale) * world_scale;
+			var leftPoint = [100, 100];
+			var rightPoint = [1366, 758];
+			var topPoint = [1368, 10];
+			var botPoint = [1358, 768];
+
+			var leftWall:ArbiStaticActor = new ArbiStaticActor(lrSize, leftPoint);
 			/*
 			bodyDefinition.position.set (10/2/world_scale, 768/2/world_scale);
 			polygon.setAsBox (10/2/world_scale, 768/2/world_scale);
@@ -191,7 +148,7 @@ import flash.geom.Point;
 
 			wallLeftSprite.x = (wallBody.getPosition().x - 10/2/world_scale) * world_scale;
 			wallLeftSprite.y = (wallBody.getPosition().y - 768/2/world_scale) * world_scale;
-			*/
+			
 			bodyDefinition.position.set ((1366-10/2)/world_scale, 768/2/world_scale);
 			wallBody = world.createBody (bodyDefinition);
 			fixtureDefinition.shape = polygon;
@@ -199,6 +156,7 @@ import flash.geom.Point;
 
 			wallRightSprite.x = (wallBody.getPosition().x - 10/2/world_scale) * world_scale;
 			wallRightSprite.y = (wallBody.getPosition().y - 768/2/world_scale) * world_scale;
+			*/
 
 		}
 	}
