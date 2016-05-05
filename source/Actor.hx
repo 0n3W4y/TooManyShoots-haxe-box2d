@@ -21,7 +21,6 @@ class Actor {
 	public var world_scale:Float;
 	public var world:B2World;
 	public var world_sprite:Sprite;
-
 	
 	public function new(body:B2Body, costume:Sprite){
 

@@ -14,15 +14,15 @@ class ContactListener extends B2ContactListener{
 
 		var bodyUserData = contact.getFixtureA().getBody().getUserData();
 
-		if (bodyUserData == PlayerActor){
-			bodyUserData.startContact();
+		if (Std.is(bodyUserData, PlayerActor)){
+			PlayerActor.startContact();
 			trace(" CONTACT! ");
 		}
 
 		bodyUserData = contact.getFixtureB().getBody().getUserData();
 
-		if (bodyUserData == PlayerActor){
-			bodyUserData.startContact();
+		if (Std.is(bodyUserData, PlayerActor)){
+			PlayerActor.startContact();
 			trace(" CONTACT! ");
 		}
 	}
@@ -31,15 +31,15 @@ class ContactListener extends B2ContactListener{
 
 		var bodyUserData = contact.getFixtureA().getBody().getUserData();
 
-		if (bodyUserData == PlayerActor){
-			bodyUserData.stopContact();
+		if (Std.is(bodyUserData, PlayerActor)){
+			PlayerActor.stopContact();
 			trace("  END contact! ");
 		}
 
 		bodyUserData = contact.getFixtureB().getBody().getUserData();
 
-		if (bodyUserData == PlayerActor){
-			bodyUserData.stopContact();
+		if (Std.is(bodyUserData, PlayerActor)){
+			PlayerActor.stopContact();
 			trace("  END contact! ");
 		}
 	}

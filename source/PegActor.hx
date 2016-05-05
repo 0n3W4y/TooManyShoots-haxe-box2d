@@ -60,11 +60,13 @@ class PegActor extends Actor {
 			if(_beenHit){
 				pegSprite.graphics.clear();
 				pegSprite.graphics.beginFill(0x00aa00, 1); //green
+				pegSprite.graphics.drawCircle(0, 0, PEG_DIAMETER);
 				pegSprite.graphics.endFill();
 			}
 			else{
 				pegSprite.graphics.clear();
 				pegSprite.graphics.beginFill(0x0000aa, 1);  //blue
+				pegSprite.graphics.drawCircle(0, 0, PEG_DIAMETER);
 				pegSprite.graphics.endFill();
 			}
 		}
@@ -72,12 +74,14 @@ class PegActor extends Actor {
 			if (_beenHit){
 				pegSprite.graphics.clear();
 				pegSprite.graphics.beginFill(0xaa0000, 1); //red
+				pegSprite.graphics.drawCircle(0, 0, PEG_DIAMETER);
 				pegSprite.graphics.endFill();
 
 			}
 			else{
 				pegSprite.graphics.clear();
 				pegSprite.graphics.beginFill(0xaa00aa, 1); //yellow
+				pegSprite.graphics.drawCircle(0, 0, PEG_DIAMETER);
 				pegSprite.graphics.endFill();
 			}
 		}

@@ -47,7 +47,7 @@ import flash.geom.Point;
 		{
 
 			createWorld();
-			add_debuger();
+		//	add_debuger();
 			createLevel();
 			addEventListener(Event.ENTER_FRAME, update);			
 		}
