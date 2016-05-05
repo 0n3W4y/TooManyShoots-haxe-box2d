@@ -60,7 +60,6 @@ class ArbiStaticActor extends Actor{
 		sprite.graphics.lineStyle(2, 0x0000ff);
 		var firstPoint = coord[0];
 		sprite.graphics.moveTo(firstPoint.x*world_scale, firstPoint.y*world_scale);
-		trace (coord.length);
 		for(i in 1...coord.length){
 			var nextPoint = coord[i];
 			sprite.graphics.lineTo(nextPoint.x*world_scale, nextPoint.y*world_scale);
@@ -74,9 +73,4 @@ class ArbiStaticActor extends Actor{
 
 	}
 
-	//override public function updateMyLook(){
-	//	_costume.x = (_body.getPosition().x - sizeX/2/world_scale) * world_scale;
-	//	_costume.y = (_body.getPosition().y - sizeY/2/world_scale) * world_scale;
-	//	_costume.rotation = _body.getAngle() * 180/Math.PI;
-	//}
 }

@@ -59,12 +59,12 @@ class PegActor extends Actor {
 		if (_pegType == 1){
 			if(_beenHit){
 				pegSprite.graphics.clear();
-				pegSprite.graphics.beginFill(0x00aa00, 1); //blue
+				pegSprite.graphics.beginFill(0x00aa00, 1); //green
 				pegSprite.graphics.endFill();
 			}
 			else{
 				pegSprite.graphics.clear();
-				pegSprite.graphics.beginFill(0x0000aa, 1);  //green
+				pegSprite.graphics.beginFill(0x0000aa, 1);  //blue
 				pegSprite.graphics.endFill();
 			}
 		}

@@ -14,6 +14,7 @@ import flash.display.Sprite;
 class PlayerActor extends Actor{
 
 	private static var PLAYER_DIAMETER:Int = 15;
+	public static var mContacting:Bool = false;
 
 	
 	public function new(location:Point, initVel:B2Vec2){
@@ -47,5 +48,34 @@ class PlayerActor extends Actor{
 		
 		super(body, playerSprite);
 
+	}
+
+	override private function childSpecificUpdate(){
+		if (_costume.y > _costume.stage.stageHeight){
+			_costume.graphics.clear();
+			//remove;
+		}
+
+		if (mContacting){
+			_costume.graphics.clear();
+			_costume.graphics.beginFill(0x00ff00, 1); //green
+			_costume.graphics.endFill();
+			trace ( "i change color to green");
+		}else{
+			_costume.graphics.clear();
+			_costume.graphics.beginFill(0x0000ff, 1); //blue
+			_costume.graphics.endFill();
+			//trace( "i change color to blue");
+		}
+	}
+
+	public static function startContact(){
+		mContacting = true;
+		trace ( mContacting + " = mContacting");
+	}
+
+	public static function stopContact(){
+		mContacting = false;
+		trace ( mContacting + " = mContacting");
 	}
 }

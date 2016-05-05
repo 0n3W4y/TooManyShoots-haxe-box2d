@@ -75,6 +75,8 @@ import flash.geom.Point;
 
 			world = Global.world;
 			world_scale = Global.world_scale;
+
+			world.setContactListener(new ContactListener());
 		}
 
 		public function createLevel(){
@@ -88,7 +90,7 @@ import flash.geom.Point;
 			var vetrSpacing:Int = 36;
 			var pegBoundsX:Int = 120;
 			var pegBoundsY:Int = 100;
-			var pegBoundsWidth:Int = 450;
+			var pegBoundsWidth:Int = 500;
 			var pegBoundsHeight:Int = 250;
 			var pegY = pegBoundsY;
 			var flipWor:Bool = false;
@@ -118,7 +120,7 @@ import flash.geom.Point;
 
 		public function createActor(){
 
-			var actor:PlayerActor = new PlayerActor(new Point(200, 20), new B2Vec2(0, 0));
+			var actor:PlayerActor = new PlayerActor(new Point(720/2, 20), new B2Vec2(0, 0));
 			_allActors.push(actor);
 		}
 
@@ -131,34 +133,57 @@ import flash.geom.Point;
   			lrCoord.push(new B2Vec2(10/2/world_scale, 480/2/world_scale));
   			lrCoord.push(new B2Vec2(-10/2/world_scale,  480/2/world_scale));
 
-			var tbSize = [720, 10];
+			var tbSize = new Array();
+			tbSize.push(new B2Vec2(-720/2/world_scale, -10/2/world_scale));
+			tbSize.push(new B2Vec2(720/2/world_scale, -10/2/world_scale));
+			tbSize.push(new B2Vec2(720/2/world_scale, 10/2/world_scale));
+			tbSize.push(new B2Vec2(-720/2/world_scale, 10/2/world_scale));
 
 			var leftPoint = new B2Vec2(5/world_scale, 480/2/world_scale);
 			var rightPoint = new B2Vec2(715/world_scale, 480/2/world_scale);
-			//var topPoint = [720, 10];
-			//var botPoint = [720, 475*2];
+			//var topPoint = new B2Vec2(720/2/world_scale, 5/world_scale);
+			//var botPoint = new B2Vec2(720/2/world_scale, 475/world_scale);
 
 			var leftWall:ArbiStaticActor = new ArbiStaticActor(lrCoord, leftPoint);
 			var rightWall:ArbiStaticActor = new ArbiStaticActor(lrCoord, rightPoint);
 			//var topWall:ArbiStaticActor = new ArbiStaticActor(tbSize, topPoint);
 			//var botWall:ArbiStaticActor = new ArbiStaticActor(tbSize, botPoint);
 			
-			//set each vertex of polygon in an array
-  			var vertices = new Array();
-  			vertices.push(new B2Vec2(-10/world_scale,  20/world_scale));
-  			vertices.push(new B2Vec2(-10/world_scale,  0));
-  			vertices.push(new B2Vec2( 0, -30/world_scale));
-  			vertices.push(new B2Vec2(10/world_scale,  0));
-  			vertices.push(new B2Vec2( 10/world_scale,  10/world_scale));
-  
-  			var polygonShape = new B2PolygonShape();
-  			polygonShape.setAsArray(vertices, 5); //pass array to the shape
-  			var myFixtureDef = new B2FixtureDef();
-  			myFixtureDef.shape = polygonShape; //change the shape of the fixture
-  			var myBodyDef = new B2BodyDef();
-  			myBodyDef.position.set(10, 1); //in the middle
-  			myBodyDef.type = B2Body.b2_dynamicBody;
-  			var body = world.createBody (myBodyDef);
-  			body.createFixture(myFixtureDef);
+			_allActors.push(leftWall);
+			_allActors.push(rightWall);
+			//_allActors.push(botWall);
+			//_allActors.push(topWall);
+
+			var lRamp = new Array();
+			lRamp.push(new B2Vec2(-70/2/world_scale, -30/2/world_scale));
+			lRamp.push(new B2Vec2(70/2/world_scale, 20/2/world_scale));
+			lRamp.push(new B2Vec2(70/2/world_scale, 30/2/world_scale));
+			lRamp.push(new B2Vec2(-70/2/world_scale, -20/2/world_scale));
+
+			var rRamp = new Array();
+			rRamp.push(new B2Vec2(-70/2/world_scale, 30/2/world_scale));
+			rRamp.push(new B2Vec2(70/2/world_scale, -20/2/world_scale));
+			rRamp.push(new B2Vec2(70/2/world_scale, -30/2/world_scale));
+			rRamp.push(new B2Vec2(-70/2/world_scale, 20/2/world_scale));
+
+			var lRampPoint1 = new B2Vec2(80/2/world_scale, 400/2/world_scale);
+			var lRampPoint2 = new B2Vec2(80/2/world_scale, 550/2/world_scale);
+
+			var rRampPoint1 = new B2Vec2(680/world_scale, 350/2/world_scale);
+			var rRampPoint2 = new B2Vec2(680/world_scale, 500/2/world_scale);
+
+			var lRamp1:ArbiStaticActor = new ArbiStaticActor(lRamp, lRampPoint1);
+			var lRamp2:ArbiStaticActor = new ArbiStaticActor(lRamp, lRampPoint2);
+			var rRamp1:ArbiStaticActor = new ArbiStaticActor(rRamp, rRampPoint1);
+			var rRamp2:ArbiStaticActor = new ArbiStaticActor(rRamp, rRampPoint2);
+
+			_allActors.push(lRamp1);
+			_allActors.push(lRamp2);
+			_allActors.push(rRamp1);
+			_allActors.push(rRamp2);
+
+
+
+
 		}
 	}

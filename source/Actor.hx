@@ -31,6 +31,8 @@ class Actor {
 		_costume = costume;
 		_body = body;
 
+		_body.setUserData(this);
+
 		updateMyLook();
 	}
 
@@ -50,6 +52,7 @@ class Actor {
 		_costume.x = _body.getPosition().x * world_scale;
 		_costume.y = _body.getPosition().y * world_scale;
 		_costume.rotation = _body.getAngle() * 180/Math.PI;
+
 	}
 
 	private function childSpecificUpdate(){
