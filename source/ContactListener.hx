@@ -12,19 +12,18 @@ class ContactListener extends B2ContactListener{
 
 	override public function beginContact(contact:B2Contact){
 
-		var bodyUserData = contact.getFixtureA().getBody().getUserData();
+		var bodyUserDataA = contact.getFixtureA().getBody().getUserData();
+		var bodyUserDataB = contact.getFixtureB().getBody().getUserData();
 
-		if (Std.is(bodyUserData, PlayerActor)){
-			PlayerActor.startContact();
-			trace(" CONTACT! ");
+		if (Std.is(bodyUserDataA, PlayerActor) && Std.is(bodyUserDataB, PegActor)){
+			bodyUserDataA.startContact();
+			bodyUserDataB.hitByPlayer();
+		}
+		else if(Std.is(bodyUserDataB, PlayerActor) && Std.is(bodyUserDataA, PegActor)){
+			bodyUserDataA.hitByPlayer();
+			bodyUserDataB.startContact();
 		}
 
-		bodyUserData = contact.getFixtureB().getBody().getUserData();
-
-		if (Std.is(bodyUserData, PlayerActor)){
-			PlayerActor.startContact();
-			trace(" CONTACT! ");
-		}
 	}
 
 	override public function endContact(contact:B2Contact){
@@ -32,15 +31,13 @@ class ContactListener extends B2ContactListener{
 		var bodyUserData = contact.getFixtureA().getBody().getUserData();
 
 		if (Std.is(bodyUserData, PlayerActor)){
-			PlayerActor.stopContact();
-			trace("  END contact! ");
+			bodyUserData.stopContact();
 		}
 
 		bodyUserData = contact.getFixtureB().getBody().getUserData();
 
 		if (Std.is(bodyUserData, PlayerActor)){
-			PlayerActor.stopContact();
-			trace("  END contact! ");
+			bodyUserData.stopContact();
 		}
 	}
 	

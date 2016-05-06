@@ -17,10 +17,12 @@ class PegActor extends Actor {
 	public static var GOAL:Int = 2;
 
 	private static var PEG_DIAMETER:Int = 19;
+	private var counter:Int = 0;
 
-	private var _beenHit:Bool;
-	private var _pegType:Int;
-	private var pegSprite:Sprite;
+	public  var _beenHit:Bool;
+	public  var _pegType:Int;
+	public  var pegSprite:Sprite;
+
 
 	public function new(location:flash.geom.Point, type:Int){
 		_beenHit = false;
@@ -28,6 +30,7 @@ class PegActor extends Actor {
 		var world = Global.world;
 		var world_scale = Global.world_scale;
 		var world_sprite = Global.world_sprite;
+
 
 		pegSprite = new Sprite();
 		pegSprite.graphics.beginFill(0x000000, 1); 
@@ -54,8 +57,16 @@ class PegActor extends Actor {
 		
 	}
 
+	public  function hitByPlayer(){
+		if (! _beenHit){
+			_beenHit = true;
+			setColor();
+			dispatchEvent(new PegEvent(PegEvent.PEG_LIT_UP));
+		}
+	}
 
-	private function setColor(){
+
+	public function setColor(){
 		if (_pegType == 1){
 			if(_beenHit){
 				pegSprite.graphics.clear();

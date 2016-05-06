@@ -14,7 +14,7 @@ import flash.events.EventDispatcher;
 import flash.display.DisplayObject;
 
 
-class Actor {
+class Actor extends EventDispatcher{
 	
 	private var _body:B2Body;
 	private var _costume:Sprite;
@@ -33,6 +33,7 @@ class Actor {
 		_body.setUserData(this);
 
 		updateMyLook();
+		super();
 	}
 
 	public function updateNow(){
@@ -44,6 +45,13 @@ class Actor {
 	}
 
 	public function destroy(){
+		cleanUpBeforeRemoving();
+
+		_costume.parent.removeChild(_costume);
+		world.destroyBody(_body);
+	}
+
+	private function cleanUpBeforeRemoving(){
 
 	}
 

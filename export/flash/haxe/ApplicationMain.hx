@@ -95,7 +95,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "737",
+			build: "802",
 			company: "InTrustYourSelf",
 			file: "TooManyShoots",
 			fps: 30,

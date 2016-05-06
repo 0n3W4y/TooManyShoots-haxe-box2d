@@ -10,14 +10,16 @@ import box2D.dynamics.B2DebugDraw;
 import box2D.dynamics.B2FixtureDef;
 import box2D.dynamics.B2Fixture;
 import flash.display.Sprite;
+import flash.events.EventDispatcher;
+
 
 class PlayerActor extends Actor{
 
 	private static var PLAYER_DIAMETER:Int = 15;
-	public static var  mContacting:Bool = false;
+	public var  mContacting:Bool = false;
 
 	
-	public function new(location:Point, initVel:B2Vec2){
+	public function new(location:Point, initVel:Point){
 		var world = Global.world;
 		var world_scale = Global.world_scale;
 		var world_sprite = Global.world_sprite;
@@ -43,7 +45,8 @@ class PlayerActor extends Actor{
 			
 		body.createFixture (fixtureDefinition);
 		
-		body.setLinearVelocity(initVel);
+		var linVelocity = new B2Vec2(initVel.x/world_scale, initVel.y/world_scale);
+		body.setLinearVelocity(linVelocity);
 		
 		
 		super(body, playerSprite);
@@ -52,7 +55,7 @@ class PlayerActor extends Actor{
 
 	override private function childSpecificUpdate(){
 		if (_costume.y > _costume.stage.stageHeight){
-			_costume.graphics.clear();
+			dispatchEvent(new BallEvent(BallEvent.BALL_OFF_SCREEN));
 			//remove;
 		}
 
@@ -61,24 +64,20 @@ class PlayerActor extends Actor{
 			_costume.graphics.beginFill(0x00ff00, 1); //green
 			_costume.graphics.drawCircle(0, 0, PLAYER_DIAMETER);
 			_costume.graphics.endFill();
-			trace ( "i change color to green");
 		}else{
 			_costume.graphics.clear();
 			_costume.graphics.beginFill(0x0000ff, 1); //blue
 			_costume.graphics.drawCircle(0, 0, PLAYER_DIAMETER);
 			_costume.graphics.endFill();
-			//trace( "i change color to blue");
 		}
 	}
 
-	public static function startContact(){
+	public function startContact(){
 		mContacting = true;
-		trace ( mContacting + " = mContacting");
 	}
 
-	public static function stopContact(){
+	public function stopContact(){
 		mContacting = false;
-		trace ( mContacting + " = mContacting");
 	}
 
 }

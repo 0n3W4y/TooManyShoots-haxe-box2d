@@ -19,6 +19,7 @@ import flash.utils.Timer;
 import flash.events.TimerEvent;
 import flash.display.Stage;
 import flash.geom.Point;
+import flash.events.MouseEvent;
 
 	class Main extends Sprite
 	{	
@@ -28,6 +29,11 @@ import flash.geom.Point;
 		private var velocityIterations:Int = 10;
 		private var positionIterations:Int = 10;
 		private var _allActors:Array<Dynamic> = new Array();
+		private var _actorsToRemove:Array<Dynamic> = new Array();
+		private var _pegsLitUp:Array<Dynamic> = new Array();
+
+		private var LAUNCH_POINT:Point = new Point(720/2, 20);
+		private var LAUNCH_VELOCITY:Float = 30.0;
 
 		public static function main () {
 		
@@ -47,9 +53,10 @@ import flash.geom.Point;
 		{
 
 			createWorld();
-		//	add_debuger();
+			add_debuger();
 			createLevel();
-			addEventListener(Event.ENTER_FRAME, update);			
+			addEventListener(Event.ENTER_FRAME, update);
+			Lib.current.stage.addEventListener(MouseEvent.CLICK, lauchBall);			
 		}
 
 		private function add_debuger()
@@ -81,7 +88,7 @@ import flash.geom.Point;
 
 		public function createLevel(){
 			add_walls();
-			createActor();
+			
 			createPegs();
 		}
 
@@ -100,6 +107,7 @@ import flash.geom.Point;
 				flipWor = !flipWor;
 				while(pegX < (pegBoundsX+pegBoundsWidth)){
 					var newPeg:PegActor = new PegActor(new Point(pegX, pegY), PegActor.NORMAL);
+					newPeg.addEventListener(PegEvent.PEG_LIT_UP, handlePegLitUp);
 					_allActors.push(newPeg);
 					pegX +=horizSpacing;
 				}
@@ -111,17 +119,62 @@ import flash.geom.Point;
 
 			world.step(world_step, velocityIterations, positionIterations);
 			world.clearForces();
-			world.drawDebugData();
+		//	world.drawDebugData();
 			for (i in 0..._allActors.length){
 				_allActors[i].updateNow();
 			}
+
+			removeActor();
 			
 		}
 
-		public function createActor(){
 
-			var actor:PlayerActor = new PlayerActor(new Point(720/2, 20), new B2Vec2(0, 0));
-			_allActors.push(actor);
+		private function handlePlayerOffScreen(event:BallEvent){
+			var actorToRemove:PlayerActor = event.currentTarget;
+			markToRemoveActor(actorToRemove);
+			actorToRemove.removeEventListener(BallEvent.BALL_OFF_SCREEN, handlePlayerOffScreen);
+
+			for (i in 0..._pegsLitUp.length){
+				markToRemoveActor(_pegsLitUp[i]);
+			}
+
+			_pegsLitUp = new Array();
+		}
+
+		private function handlePegLitUp(event:PegEvent){
+			var pegActor:PegActor = event.currentTarget;
+			pegActor.removeEventListener(PegEvent.PEG_LIT_UP, handlePegLitUp);
+			if (_pegsLitUp.indexOf(pegActor) < 0){
+				_pegsLitUp.push(pegActor);
+			}
+		}
+
+		public function markToRemoveActor(actor:Actor){
+			if( _actorsToRemove.indexOf(actor) < 0 ){
+				_actorsToRemove.push(actor);
+
+			}
+		}
+
+		public function removeActor(){
+			for (i in 0..._actorsToRemove.length){
+				_actorsToRemove[i].destroy();
+				var index = _allActors.indexOf(_actorsToRemove[i]);
+				if (index > -1){
+					_allActors.splice(index, 1);
+				}
+			}
+			_actorsToRemove = new Array();
+
+		}
+
+		private function lauchBall(event:MouseEvent){
+			var direction:Point = new Point(mouseX, mouseY).subtract(LAUNCH_POINT);
+			direction.normalize(LAUNCH_VELOCITY);
+
+			var newPlayer:PlayerActor = new PlayerActor(LAUNCH_POINT, direction);
+			newPlayer.addEventListener(BallEvent.BALL_OFF_SCREEN, handlePlayerOffScreen);
+			_allActors.push(newPlayer);
 		}
 
 
