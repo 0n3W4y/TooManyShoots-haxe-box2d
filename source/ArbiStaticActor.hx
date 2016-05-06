@@ -32,9 +32,9 @@ class ArbiStaticActor extends Actor{
 		var polygon = new B2PolygonShape ();
 		var bodyDef = new B2BodyDef();
 		var fixtureDef = new B2FixtureDef ();
-		fixtureDef.density = 0.2;
-		fixtureDef.friction = 0.3;
-		fixtureDef.restitution = 0.4;
+		//fixtureDef.density = 10;
+		//fixtureDef.friction = 10;
+		//fixtureDef.restitution = 10;
 		var body:B2Body;
 
 		bodyDef.position.set (location.x, location.y);

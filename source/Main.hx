@@ -32,8 +32,8 @@ import flash.events.MouseEvent;
 		private var _actorsToRemove:Array<Dynamic> = new Array();
 		private var _pegsLitUp:Array<Dynamic> = new Array();
 
-		private var LAUNCH_POINT:Point = new Point(720/2, 20);
-		private var LAUNCH_VELOCITY:Float = 30.0;
+		private var LAUNCH_POINT:Point = new Point(720/2, 10);
+		private var LAUNCH_VELOCITY:Float = 90.0;
 
 		public static function main () {
 		
