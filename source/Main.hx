@@ -33,7 +33,7 @@ import flash.events.MouseEvent;
 		private var _pegsLitUp:Array<Dynamic> = new Array();
 
 		private var LAUNCH_POINT:Point = new Point(720/2, 10);
-		private var LAUNCH_VELOCITY:Float = 90.0;
+		private var LAUNCH_VELOCITY:Float = 140.0;
 
 		public static function main () {
 		
@@ -96,7 +96,7 @@ import flash.events.MouseEvent;
 			var horizSpacing:Int = 36;
 			var vetrSpacing:Int = 36;
 			var pegBoundsX:Int = 120;
-			var pegBoundsY:Int = 100;
+			var pegBoundsY:Int = 400;
 			var pegBoundsWidth:Int = 500;
 			var pegBoundsHeight:Int = 250;
 			var pegY = pegBoundsY;
@@ -119,7 +119,7 @@ import flash.events.MouseEvent;
 
 			world.step(world_step, velocityIterations, positionIterations);
 			world.clearForces();
-		//	world.drawDebugData();
+			world.drawDebugData();
 			for (i in 0..._allActors.length){
 				_allActors[i].updateNow();
 			}
@@ -181,19 +181,19 @@ import flash.events.MouseEvent;
 		public function add_walls()
 		{	
 			var lrCoord = new Array();
-			lrCoord.push(new B2Vec2(-10/2/world_scale,  -480/2/world_scale));
-  			lrCoord.push(new B2Vec2(10/2/world_scale,  -480/2/world_scale));
-  			lrCoord.push(new B2Vec2(10/2/world_scale, 480/2/world_scale));
-  			lrCoord.push(new B2Vec2(-10/2/world_scale,  480/2/world_scale));
-
+			lrCoord.push(new B2Vec2(-10/2/world_scale,  -1280/2/world_scale));
+  			lrCoord.push(new B2Vec2(10/2/world_scale,  -1280/2/world_scale));
+  			lrCoord.push(new B2Vec2(10/2/world_scale, 1280/2/world_scale));
+  			lrCoord.push(new B2Vec2(-10/2/world_scale,  1280/2/world_scale));
+/*
 			var tbSize = new Array();
 			tbSize.push(new B2Vec2(-720/2/world_scale, -10/2/world_scale));
 			tbSize.push(new B2Vec2(720/2/world_scale, -10/2/world_scale));
 			tbSize.push(new B2Vec2(720/2/world_scale, 10/2/world_scale));
 			tbSize.push(new B2Vec2(-720/2/world_scale, 10/2/world_scale));
-
-			var leftPoint = new B2Vec2(5/world_scale, 480/2/world_scale);
-			var rightPoint = new B2Vec2(715/world_scale, 480/2/world_scale);
+*/
+			var leftPoint = new B2Vec2(5/world_scale, 1280/2/world_scale);
+			var rightPoint = new B2Vec2(715/world_scale, 1280/2/world_scale);
 			//var topPoint = new B2Vec2(720/2/world_scale, 5/world_scale);
 			//var botPoint = new B2Vec2(720/2/world_scale, 475/world_scale);
 
@@ -214,29 +214,37 @@ import flash.events.MouseEvent;
 			lRamp.push(new B2Vec2(-70/2/world_scale, -20/2/world_scale));
 
 			var rRamp = new Array();
-			rRamp.push(new B2Vec2(-70/2/world_scale, 30/2/world_scale));
-			rRamp.push(new B2Vec2(70/2/world_scale, -20/2/world_scale));
-			rRamp.push(new B2Vec2(70/2/world_scale, -30/2/world_scale));
 			rRamp.push(new B2Vec2(-70/2/world_scale, 20/2/world_scale));
+			rRamp.push(new B2Vec2(70/2/world_scale, -30/2/world_scale));
+			rRamp.push(new B2Vec2(70/2/world_scale, -20/2/world_scale));
+			rRamp.push(new B2Vec2(-70/2/world_scale, 30/2/world_scale));
 
-			var lRampPoint1 = new B2Vec2(80/2/world_scale, 400/2/world_scale);
-			var lRampPoint2 = new B2Vec2(80/2/world_scale, 550/2/world_scale);
+			var lRampPoint1 = new B2Vec2(80/2/world_scale, 600/2/world_scale);
+			var lRampPoint2 = new B2Vec2(80/2/world_scale, 800/2/world_scale);
+			var lRampPoint3 = new B2Vec2(80/2/world_scale, 1000/2/world_scale);
 
-			var rRampPoint1 = new B2Vec2(680/world_scale, 350/2/world_scale);
-			var rRampPoint2 = new B2Vec2(680/world_scale, 500/2/world_scale);
+			var rRampPoint1 = new B2Vec2(680/world_scale, 600/2/world_scale);
+			var rRampPoint2 = new B2Vec2(680/world_scale, 800/2/world_scale);
+			var rRampPoint3 = new B2Vec2(680/world_scale, 1000/2/world_scale);
 
 			var lRamp1:ArbiStaticActor = new ArbiStaticActor(lRamp, lRampPoint1);
 			var lRamp2:ArbiStaticActor = new ArbiStaticActor(lRamp, lRampPoint2);
+			var lRamp3:ArbiStaticActor = new ArbiStaticActor(lRamp, lRampPoint3);
 			var rRamp1:ArbiStaticActor = new ArbiStaticActor(rRamp, rRampPoint1);
 			var rRamp2:ArbiStaticActor = new ArbiStaticActor(rRamp, rRampPoint2);
+			var rRamp3:ArbiStaticActor = new ArbiStaticActor(rRamp, rRampPoint3);
 
 			_allActors.push(lRamp1);
 			_allActors.push(lRamp2);
+			_allActors.push(lRamp3);
 			_allActors.push(rRamp1);
 			_allActors.push(rRamp2);
+			_allActors.push(rRamp3);
 
 
+			var bonusChute = new BonusChuteActor(200, 450, 900);
 
+			_allActors.push(bonusChute);
 
 		}
 	}

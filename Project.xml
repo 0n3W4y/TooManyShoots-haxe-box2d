@@ -5,6 +5,7 @@
 	<app main="Main" path="Export" file="TooManyShoots" />
 	
 	<window width="720" height="480" unless="mobile" />
+	<window width="1280" height="720" />
 	
 	<source path="source" />
 	
