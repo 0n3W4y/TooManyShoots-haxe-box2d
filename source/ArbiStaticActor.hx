@@ -12,10 +12,11 @@ import flash.display.Sprite;
 
 class ArbiStaticActor extends Actor{
 
+	private var _parent:Sprite;
 
-
-	public function new(coord:Array<B2Vec2>, location:B2Vec2){
+	public function new(parent, coord:Array<B2Vec2>, location:B2Vec2){
 	    
+	    _parent = parent;
 		var myBody:B2Body = createBody(coord, location);
 		var mySprite:Sprite = createSprite(coord, location);
 		
@@ -26,7 +27,7 @@ class ArbiStaticActor extends Actor{
 
 		var world = Global.world;
 		var world_scale = Global.world_scale;
-		var world_sprite = Global.world_sprite;
+		var world_sprite = _parent;
 		
 
 		var polygon = new B2PolygonShape ();
@@ -53,7 +54,7 @@ class ArbiStaticActor extends Actor{
 
 		var world = Global.world;
 		var world_scale = Global.world_scale;
-		var world_sprite = Global.world_sprite;
+		var world_sprite = _parent;
 		
 		var sprite = new Sprite();
 		sprite.graphics.beginFill(0xff0000, 1);

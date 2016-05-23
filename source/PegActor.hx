@@ -18,18 +18,20 @@ class PegActor extends Actor {
 
 	private static var PEG_DIAMETER:Int = 19;
 	private var counter:Int = 0;
+	private var _parent:Sprite;
 
 	public  var _beenHit:Bool;
 	public  var _pegType:Int;
 	public  var pegSprite:Sprite;
 
 
-	public function new(location:flash.geom.Point, type:Int){
+	public function new(parent, location:flash.geom.Point, type:Int){
+		_parent = parent;
 		_beenHit = false;
 		_pegType = type;
 		var world = Global.world;
 		var world_scale = Global.world_scale;
-		var world_sprite = Global.world_sprite;
+		var world_sprite = _parent;
 
 
 		pegSprite = new Sprite();
@@ -63,6 +65,12 @@ class PegActor extends Actor {
 			setColor();
 			dispatchEvent(new PegEvent(PegEvent.PEG_LIT_UP));
 		}
+	}
+
+	public function setType(newType:Int)
+	{
+		_pegType = newType;
+		setColor();
 	}
 
 

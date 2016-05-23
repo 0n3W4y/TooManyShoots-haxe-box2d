@@ -9,10 +9,9 @@ import box2D.dynamics.B2FixtureDef;
 import box2D.dynamics.B2Fixture;
 import box2D.collision.shapes.B2CircleShape;
 
-
 import flash.events.EventDispatcher;
 import flash.display.DisplayObject;
-
+import flash.geom.Point;
 
 class Actor extends EventDispatcher{
 	
@@ -26,7 +25,7 @@ class Actor extends EventDispatcher{
 
 		world_scale = Global.world_scale;
 		world = Global.world;
-		world_sprite = Global.world_sprite;
+
 		_costume = costume;
 		_body = body;
 
@@ -53,6 +52,11 @@ class Actor extends EventDispatcher{
 
 	private function cleanUpBeforeRemoving(){
 
+	}
+
+	public function getSpriteLoc()
+	{
+		return new Point(_costume.x, _costume.y);
 	}
 
 	private function updateMyLook(){

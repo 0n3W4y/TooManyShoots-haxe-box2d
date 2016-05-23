@@ -18,11 +18,14 @@ class PlayerActor extends Actor{
 	private static var PLAYER_DIAMETER:Int = 15;
 	public var  mContacting:Bool = false;
 
+	private var _parent:Sprite;
+
 	
-	public function new(location:Point, initVel:Point){
+	public function new(parent, location:Point, initVel:Point){
+		_parent = parent;
 		var world = Global.world;
 		var world_scale = Global.world_scale;
-		var world_sprite = Global.world_sprite;
+		var world_sprite = _parent;
 
 		var playerSprite = new Sprite();
 		playerSprite.graphics.beginFill(0x07aa15, 1);
@@ -35,7 +38,8 @@ class PlayerActor extends Actor{
 		var circle = new B2CircleShape (PLAYER_DIAMETER/2/ world_scale);
 		var bodyDefinition = new B2BodyDef();
 		bodyDefinition.position.set (location.x/world_scale, location.y/world_scale);
-		bodyDefinition.type = B2Body.b2_dynamicBody;	
+		bodyDefinition.type = B2Body.b2_dynamicBody;
+		bodyDefinition.bullet = true;
 		var body = world.createBody(bodyDefinition);
 		var fixtureDefinition = new B2FixtureDef ();
 		fixtureDefinition.shape = circle;
@@ -61,12 +65,12 @@ class PlayerActor extends Actor{
 
 		if (mContacting){
 			_costume.graphics.clear();
-			_costume.graphics.beginFill(0x00ff00, 1); //green
+			_costume.graphics.beginFill(0x00ffaa, 1); //green+blue
 			_costume.graphics.drawCircle(0, 0, PLAYER_DIAMETER);
 			_costume.graphics.endFill();
 		}else{
 			_costume.graphics.clear();
-			_costume.graphics.beginFill(0x0000ff, 1); //blue
+			_costume.graphics.beginFill(0xff0000, 1); //red
 			_costume.graphics.drawCircle(0, 0, PLAYER_DIAMETER);
 			_costume.graphics.endFill();
 		}
@@ -78,6 +82,9 @@ class PlayerActor extends Actor{
 
 	public function stopContact(){
 		mContacting = false;
+	}
+	public function hitBonusTarget(){
+		dispatchEvent(new BallEvent(BallEvent.BALL_HIT_BONUS));
 	}
 
 }
